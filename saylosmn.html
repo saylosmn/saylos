@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нийгэм - Улс төр</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .quiz-container { width: 50%; margin: auto; }
+        .question { font-size: 18px; margin: 20px 0; }
+        .answers { list-style: none; padding: 0; }
+        .answers li { margin: 10px 0; }
+        button { padding: 10px 20px; margin-top: 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Нийгэм 10-р анги - Улс төр</h1>
+    <div class="quiz-container">
+        <div id="quiz">
+            <p class="question" id="question">Даваагяв ийн асуултууд</p>
+            <ul class="answers">
+                <li><button onclick="checkAnswer(1)"> Амархан </button></li>
+                <li><button onclick="checkAnswer(2)"> Дунд </button></li>
+                <li><button onclick="checkAnswer(3)"> Чи чадахгүй </button></li>
+                <li><button onclick="checkAnswer(4)"> Хараад ч хэрэггүй </button></li>
+            </ul>
+        </div>
+        <p id="score">Оноо: 0</p>
+    </div>
+
+    <script>
+        const questions = [          
+    {
+        "question": "Монгол Улсын нийслэл юу вэ?",
+        "answers": ["Улаанбаатар", "Дархан", "Эрдэнэт", "Чойбалсан"],
+        "correct": 1},
+    {
+        "question": "Монголын хамгийн өндөр уул юу вэ?",
+        "answers": ["Отгонтэнгэр", "Алтай Таван Богд", "Богд хан", "Хэнтийн нуруу"],
+        "correct": "Отгонтэнгэр"
+    },
+    {
+        "question": "Монголын хамгийн том нуур аль нь вэ?",
+        "answers": ["Хөвсгөл нуур", "Увс нуур", "Буйр нуур", "Орон нуур"],
+        "correct": "Увс нуур"
+    },
+    {
+        "question": "Монгол Улсын төрийн дуулал юу вэ?",
+        "answers": ["Монгол Улсын төрийн дуулал", "Эрүүл энхийн жаргалан", "Эх орон", "Миний Монгол"],
+        "correct": "Монгол Улсын төрийн дуулал"
+    },
+    {
+        "question": "Чингис хаан хэдэн онд төрсөн бэ?",
+        "answers": ["1162", "1206", "1189", "1190"],
+        "correct": "1162"
+    },
+    {
+        "question": "Монголын эзэнт гүрэн хэдэн онд байгуулагдсан бэ?",
+        "answers": ["1206", "1227", "1215", "1240"],
+        "correct": "1206"
+    },
+    {
+        "question": "Монголын хамгийн том мөрөн юу вэ?",
+        "answers": ["Орхон", "Сэлэнгэ", "Туул", "Хэрлэн"],
+        "correct": "Сэлэнгэ"
+    },
+    {
+        "question": "Монголын хамгийн том говь юу вэ?",
+        "answers": ["Говь-Алтай", "Баянхонгор", "Дорноговь", "Говь"],
+        "correct": "Говь"
+    },
+    {
+        "question": "Монгол Улс хэдэн аймагтай вэ?",
+        "answers": ["21", "22", "20", "19"],
+        "correct": "21"
+    },
+    {
+        "question": "Монголын хамгийн урт гол юу вэ?",
+        "answers": ["Орхон", "Сэлэнгэ", "Хэрлэн", "Онон"],
+        "correct": "Орхон"
+    },
+    {
+        "question": "Монголын хамгийн алдартай нууц бичиг юу вэ?",
+        "answers": ["Монголын нууц товчоо", "Алтан товч", "Юань улсын судар", "Гэрээслэл"],
+        "correct": "Монголын нууц товчоо"
+    },
+    {
+        "question": "Наадмын гурван баяр юу вэ?",
+        "answers": ["Морь уралдах, бөх барилдах, сур харвах", "Морь уралдах, шагайн харваа, даага уралдах", "Сур харвах, шатар тоглох, бөх барилдах", "Даага уралдах, бөх барилдах, шагайн харваа"],
+        "correct": "Морь уралдах, бөх барилдах, сур харвах"
+    },
+    {
+        "question": "Монголын хамгийн эртний нийслэл аль нь вэ?",
+        "answers": ["Хархорум", "Улаанбаатар", "Эрдэнэ Зуу", "Туул хот"],
+        "correct": "Хархорум"
+    },
+    {
+        "question": "Чингис хааны эцгийн нэр хэн бэ?",
+        "answers": ["Есүхэй", "Толуй", "Хасар", "Өгөөдэй"],
+        "correct": "Есүхэй"
+    },
+    {
+        "question": "Монголын хамгийн алдартай түүхч хэн бэ?",
+        "answers": ["Ренчин", "Сухбаатар", "Б.Ринчен", "Нацагдорж"],
+        "correct": "Б.Ринчен"
+    },
+    {
+        "question": "Монгол Улс хэдэн онд НҮБ-д элссэн бэ?",
+        "answers": ["1961", "1955", "1940", "1972"],
+        "correct": "1961"
+    },
+    {
+        "question": "Чингис хааны албан ёсны нэр юу вэ?",
+        "answers": ["Тэмүжин", "Өгөөдэй", "Бат", "Хубилай"],
+        "correct": "Тэмүжин"
+    },
+    {
+        "question": "Монгол Улсын Үндсэн хууль хэдэн онд батлагдсан бэ?",
+        "answers": ["1992", "1924", "1960", "2000"],
+        "correct": "1992"
+    },
+    {
+        "question": "Монголын хамгийн том амьтан юу вэ?",
+        "answers": ["Тахь", "Хулан", "Хар сүүлт", "Аргаль"],
+        "correct": "Аргаль"
+    },
+    {
+        "question": "Монголын хамгийн алдартай соёлын өв юу вэ?",
+        "answers": ["Монголын нууц товчоо", "Жангар", "Алтан товч", "Мандухай сэцэн"],
+        "correct": "Монголын нууц товчоо"
+    }
+]
+;
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            const buttons = document.querySelectorAll(".answers button");
+            buttons.forEach((btn, index) => {
+                btn.innerText = q.answers[index];
+            });
+        }
+
+        function checkAnswer(answer) {
+            if (answer === questions[currentQuestion].correct) {
+                score += 10;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("quiz").innerHTML = "<h2>Тест дууслаа!</h2>";
+            }
+            document.getElementById("score").innerText = "Оноо: " + score;
+        }
+    </script>
+<script src="script.js"></script>
+</body>
+</html>
